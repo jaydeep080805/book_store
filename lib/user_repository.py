@@ -28,3 +28,19 @@ class UserRepository:
         # print(password)
 
         self._connection.execute("INSERT INTO users (username, password) VALUES (%s, %s)", [username, password])
+
+    def find(self, username):
+        return self._connection.execute("SELECT * FROM users WHERE username = %s", [username])
+
+    def does_user_exist(self, username):
+        return True if self.find(username) else False
+
+    def check_password(self, username, password):
+        user = self.find(username)
+
+        database_password = user[0].get("password")
+
+        if database_password == password:
+            return True
+        else:
+            return False

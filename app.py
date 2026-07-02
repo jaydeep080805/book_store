@@ -1,10 +1,13 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session
 from database_connection import DatabaseConnection
 from lib.book_repository import BookRepository
 from lib.user_repository import UserRepository
 
 # instantiate a Flask app object
 app = Flask(__name__)
+
+app.secret_key = "some_really_secret_key"
+
 
 @app.route('/hello', methods=['GET'])
 def hello():
@@ -111,6 +114,32 @@ def users():
     users = user_repo.all()
 
     return render_template("/users.html", users=users)
+
+
+@app.route("/login", methods=["GET"])
+def login_route():
+    return render_template("login.html")
+
+@app.route("/session", methods=["POST"])
+def login():
+    form_data = request.form
+    username = form_data.get("username")
+    password = form_data.get("password")
+    
+    conn = DatabaseConnection()
+    conn.connect()
+    user_repo = UserRepository(conn)
+
+    user_exists = user_repo.does_user_exist(username)
+    # print(user_exists)
+
+    if user_exists == True:
+        if user_repo.check_password(username, password) == True:
+            session["username"] = username
+            return redirect("/users")
+
+    return redirect("/login")
+
 
 # make the server run in response to `python app.py`
 # on port 5001 (you'll learn more about what this means later)
