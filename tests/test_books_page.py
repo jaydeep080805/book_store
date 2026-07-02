@@ -1,4 +1,5 @@
 from playwright.sync_api import Page, expect
+import pytest
 
 def test_has_title(page: Page):
     Page.goto(page, url="http://127.0.0.1:5001/books")
@@ -8,7 +9,7 @@ def test_has_title(page: Page):
     expect(h1).to_have_text("Books")
 
 
-def test_list_of_books_is_correct(page: Page):
+def test_list_of_books_is_correct(page: Page, db):
     # my solution
     # Page.goto(page, url="http://127.0.0.1:5001/books")
 

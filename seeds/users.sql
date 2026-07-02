@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS users;
+-- TRUNCATE users;
 
 CREATE TABLE IF NOT EXISTS users (
     id serial primary key,
@@ -6,4 +7,4 @@ CREATE TABLE IF NOT EXISTS users (
     password text
 );
 
-INSERT INTO users (username, password) VALUES ('test', 'test');
+-- INSERT INTO users (username, password) VALUES ('test', 'test');

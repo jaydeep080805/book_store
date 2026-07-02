@@ -38,6 +38,8 @@ class DatabaseConnection:
             cursor.execute(open(sql_filename, "r").read())
             self.connection.commit()
 
+        print(">>> DATABASE SEEDED")
+
     # This method executes an SQL query on the database.
     # It allows you to set some parameters too. You'll learn about this later.
     def execute(self, query, params=[]):
