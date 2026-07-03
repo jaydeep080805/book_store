@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, session
 from database_connection import DatabaseConnection
 from lib.book_repository import BookRepository
 from lib.user_repository import UserRepository
+from login_required import login_required_decorator
 
 # instantiate a Flask app object
 app = Flask(__name__)
@@ -56,6 +57,7 @@ def books():
     return render_template("books.html", books=all_books)
 
 @app.route("/books", methods=["POST"])
+@login_required_decorator
 def create_book():
     new_book = request.form
 
