@@ -47,15 +47,37 @@ def test_list_of_books_is_correct(page: Page, db):
     assert actual_books == expected_books
 
 def test_create_books_inserts_book_into_database(page: Page):
-    page.goto("http://localhost:5001/books")
+    # create new user
+    page.goto("http://localhost:5001/sign-up")
+    page.get_by_placeholder("Username").fill("test_user")
+    page.get_by_placeholder("password").fill("test_password")
+    page.get_by_role("button", name="Submit").click()
+    
 
-    page.get_by_placeholder("Title").fill("The Chroicles of Geronimo (the cat)")
-
-    page.get_by_placeholder("Author").fill("Geronimo")
-
+    # login
+    page.goto("http://localhost:5001/login")
+    page.get_by_placeholder("Username").fill("test_user")
+    page.get_by_placeholder("password").fill("test_password")
     page.get_by_role("button", name="Submit").click()
 
+    # print(page.content())
+    # page.wait_for_load_state("domcontentloaded")
+    # page.wait_for_url("http://localhost:5001/books")
+
+    # add the new book
+    # print(f'>>> placeholder: {page.get_by_placeholder("Title")}')
+    
+    # insert the boko info
+    page.goto("http://localhost:5001/books")
+    page.get_by_placeholder("Title").fill("The Chroicles of Geronimo (the cat)")
+    page.get_by_placeholder("Author").fill("Geronimo")
+    page.get_by_role("button", name="Submit").click()
+
+    # print(f">>> HEADING: {page.locator('h1').all_inner_texts()}")
+
     books = page.locator("li")
+
+    # print(f">>> {books}")
     new_book = books.all_inner_texts()[-1]
 
     assert new_book == "The Chroicles of Geronimo (the cat) by Geronimo"
