@@ -1,8 +1,9 @@
 from .user import User
 
 class UserRepository:
-    def __init__(self, conn):
+    def __init__(self, conn, bcrypt):
         self._connection = conn
+        self.bcrypt = bcrypt
 
     def all(self):
         users = self._connection.execute("SELECT * FROM users")
@@ -24,10 +25,12 @@ class UserRepository:
         username = new_user.get("username")
         password = new_user.get("password")
 
+        hashed_password = self.bcrypt.generate_password_hash(password).decode("utf-8")
+
         # print(username)
         # print(password)
 
-        self._connection.execute("INSERT INTO users (username, password) VALUES (%s, %s)", [username, password])
+        self._connection.execute("INSERT INTO users (username, password) VALUES (%s, %s)", [username, hashed_password])
 
     def find(self, username):
         return self._connection.execute("SELECT * FROM users WHERE username = %s", [username])
@@ -40,7 +43,9 @@ class UserRepository:
 
         database_password = user[0].get("password")
 
-        if database_password == password:
+        print()
+
+        if self.bcrypt.check_password_hash(database_password, password) == True:
             return True
         else:
             return False

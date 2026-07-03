@@ -3,11 +3,13 @@ from database_connection import DatabaseConnection
 from lib.book_repository import BookRepository
 from lib.user_repository import UserRepository
 from login_required import login_required_decorator
+from flask_bcrypt import Bcrypt
 
 # instantiate a Flask app object
 app = Flask(__name__)
 
 app.secret_key = "some_really_secret_key"
+bcrypt = Bcrypt(app)
 
 
 @app.route('/hello', methods=['GET'])
@@ -100,7 +102,7 @@ def create_user():
     
     conn = DatabaseConnection()
     conn.connect()
-    user_repo = UserRepository(conn)
+    user_repo = UserRepository(conn, bcrypt)
 
     user_repo.create_user(form_data)
 
@@ -111,7 +113,7 @@ def users():
     conn = DatabaseConnection()
     conn.connect()
 
-    user_repo = UserRepository(conn)
+    user_repo = UserRepository(conn, bcrypt)
 
     users = user_repo.all()
 
@@ -130,7 +132,7 @@ def login():
     
     conn = DatabaseConnection()
     conn.connect()
-    user_repo = UserRepository(conn)
+    user_repo = UserRepository(conn, bcrypt)
 
     user_exists = user_repo.does_user_exist(username)
     # print(user_exists)
