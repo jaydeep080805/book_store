@@ -19,8 +19,8 @@ def test_list_of_users_is_empty_with_inital_seed(page: Page, db):
 
     assert list_of_users.all_text_contents() == []
 
-def test_user_form_adds_to_database(page: Page, db):
-    user_repo = UserRepository(db)
+def test_user_form_adds_to_database(page: Page, db, bcrypt):
+    user_repo = UserRepository(db, bcrypt)
     
     Page.goto(page, "http://localhost:5001/sign-up")
 
@@ -28,10 +28,9 @@ def test_user_form_adds_to_database(page: Page, db):
     page.get_by_placeholder("Password").fill("test_password_form")
 
     page.get_by_role("button").click()
-
-    new_user = User(1, "test_username_form", "test_password_form")
-
+    
     all_users = user_repo.all()
 
     assert len(all_users) == 1
-    assert all_users[0] == new_user
+    assert all_users[-1].username == "test_username_form"
+    assert bcrypt.check_password_hash(all_users[-1].password, "test_password_form")

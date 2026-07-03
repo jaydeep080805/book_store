@@ -5,6 +5,12 @@ class UserRepository:
         self._connection = conn
         self.bcrypt = bcrypt
 
+    def _create_password_hash(self, password):
+        return self.bcrypt.generate_password_hash(password).decode("utf-8")
+    
+    def _check_password_hash(self, hashed_password, password):
+        return self.bcrypt.check_password_hash(hashed_password, password)
+
     def all(self):
         users = self._connection.execute("SELECT * FROM users")
 
@@ -16,16 +22,16 @@ class UserRepository:
                                     user.get("id"), 
                                     user.get("username"), 
                                     user.get("password")
-                                    )
                                 )
-
+                            )
+            
         return list_of_users
 
     def create_user(self, new_user):
         username = new_user.get("username")
         password = new_user.get("password")
 
-        hashed_password = self.bcrypt.generate_password_hash(password).decode("utf-8")
+        hashed_password = self._create_password_hash(password)
 
         # print(username)
         # print(password)
@@ -43,7 +49,4 @@ class UserRepository:
 
         database_password = user[0].get("password")
 
-        if self.bcrypt.check_password_hash(database_password, password) == True:
-            return True
-        else:
-            return False
+        return self._check_password_hash(database_password, password)
