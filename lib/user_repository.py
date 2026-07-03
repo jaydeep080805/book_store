@@ -43,8 +43,6 @@ class UserRepository:
 
         database_password = user[0].get("password")
 
-        print()
-
         if self.bcrypt.check_password_hash(database_password, password) == True:
             return True
         else:
