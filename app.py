@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, session
 from database_connection import DatabaseConnection
-from lib.book_repository import BookRepository
-from lib.user_repository import UserRepository
+from lib.books.book_repository import BookRepository
+from lib.users.user_repository import UserRepository
 from login_required import login_required_decorator
 from flask_bcrypt import Bcrypt
 

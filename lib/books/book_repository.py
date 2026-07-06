@@ -1,4 +1,4 @@
-from lib.book import Book
+from .book import Book
 
 class BookRepository:
     # We initialise with a database connection

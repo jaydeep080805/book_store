@@ -1,6 +1,6 @@
 from playwright.sync_api import Page, expect
-from lib.user import User
-from lib.user_repository import UserRepository
+from lib.users.user import User
+from lib.users.user_repository import UserRepository
 
 def test_users_page_has_title(page: Page):
     Page.goto(page, "http://localhost:5001/users")
