@@ -56,7 +56,7 @@ def books():
     book_repo = BookRepository(conn)
     all_books = book_repo.all()
 
-    return render_template("books.html", books=all_books)
+    return render_template("books/books.html", books=all_books)
 
 @app.route("/books", methods=["POST"])
 @login_required_decorator
@@ -94,7 +94,7 @@ def authors():
 
 @app.route("/sign-up", methods=["GET"])
 def sign_up():
-    return render_template("sign_up.html")
+    return render_template("users/sign_up.html")
 
 @app.route("/sign-up", methods=["POST"])
 def create_user():
@@ -117,12 +117,12 @@ def users():
 
     users = user_repo.all()
 
-    return render_template("/users.html", users=users)
+    return render_template("users/users.html", users=users)
 
 
 @app.route("/login", methods=["GET"])
 def login_route():
-    return render_template("login.html")
+    return render_template("users/login.html")
 
 @app.route("/session", methods=["POST"])
 def login():
