@@ -5,7 +5,7 @@ source .env
 
 # copy the contents locally to the aws server
 scp -r -i ~/.ssh/jaydeep_cloud_deployment.pem \
-*.py lib requirements.txt Dockerfile seeds templates static config \
+*.py lib requirements.txt Dockerfile seeds templates static config .env \
 ec2-user@$EC2_IP:~/book_store # this makes sure its sent to the book store
 
 # connect to the aws server
