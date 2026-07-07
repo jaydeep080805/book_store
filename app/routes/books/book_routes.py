@@ -1,8 +1,8 @@
 from flask import Blueprint, render_template, request, redirect
-from database_connection import DatabaseConnection
+from ...database_connection import DatabaseConnection
 # from ...lib.books.book_repository import BookRepository
-from lib.books.book_repository import BookRepository
-from login_required import login_required_decorator
+from ...lib.books.book_repository import BookRepository
+from ...login_required import login_required_decorator
 
 book_route = Blueprint('book_route', __name__,
                         template_folder='templates')

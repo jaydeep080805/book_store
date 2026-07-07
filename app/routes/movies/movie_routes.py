@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, redirect, request
-from lib.movies.movie_repository import MovieRepository
-from lib.movies.movie import Movie
-from database_connection import DatabaseConnection
+from ...lib.movies.movie_repository import MovieRepository
+from ...lib.movies.movie import Movie
+from ...database_connection import DatabaseConnection
 
 movie_route = Blueprint('movie_route', __name__,
                         template_folder='templates')

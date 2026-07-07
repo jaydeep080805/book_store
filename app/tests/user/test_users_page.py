@@ -10,8 +10,6 @@ def test_users_page_has_title(page: Page):
 
 def test_list_of_users_is_empty_with_inital_seed(page: Page, db):
     # needs reseeding since the books page now needs to create a user
-    db.seed("seeds/users.sql")
-    
     Page.goto(page, "http://localhost:5001/users")
 
     list_of_users = page.locator("li")

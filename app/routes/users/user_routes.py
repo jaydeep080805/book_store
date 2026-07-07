@@ -1,7 +1,7 @@
-from login_required import login_required_decorator
 from flask import Blueprint, render_template, request, redirect, session, current_app
-from database_connection import DatabaseConnection
-from lib.users.user_repository import UserRepository
+from ...login_required import login_required_decorator
+from ...database_connection import DatabaseConnection
+from ...lib.users.user_repository import UserRepository
 
 
 user_route = Blueprint('user_route', __name__,

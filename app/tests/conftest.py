@@ -23,9 +23,9 @@ def db():
     conn = DatabaseConnection()
     conn.connect()
 
-    conn.seed("seeds/users.sql")
-    conn.seed("seeds/books.sql")
-    conn.seed("seeds/movies.sql")
+    conn.seed("app/seeds/users.sql")
+    conn.seed("app/seeds/books.sql")
+    conn.seed("app/seeds/movies.sql")
 
     return conn
 
