@@ -10,6 +10,7 @@ def db():
 
     conn.seed("seeds/users.sql")
     conn.seed("seeds/books.sql")
+    conn.seed("seeds/movies.sql")
 
     return conn
 

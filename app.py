@@ -6,6 +6,7 @@ from login_required import login_required_decorator
 from flask_bcrypt import Bcrypt
 from routes.books.book_routes import book_route
 from routes.users.user_routes import user_route
+from routes.movies.movie_routes import movie_route
 
 # instantiate a Flask app object
 app = Flask(__name__)
@@ -16,6 +17,7 @@ app.bcrypt = bcrypt
 
 app.register_blueprint(book_route)
 app.register_blueprint(user_route)
+app.register_blueprint(movie_route)
 
 
 @app.route('/hello', methods=['GET'])
