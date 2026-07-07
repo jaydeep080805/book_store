@@ -4,12 +4,18 @@ from lib.books.book_repository import BookRepository
 from lib.users.user_repository import UserRepository
 from login_required import login_required_decorator
 from flask_bcrypt import Bcrypt
+from routes.books.book_routes import book_route
+from routes.users.user_routes import user_route
 
 # instantiate a Flask app object
 app = Flask(__name__)
 
 app.secret_key = "some_really_secret_key"
 bcrypt = Bcrypt(app)
+app.bcrypt = bcrypt
+
+app.register_blueprint(book_route)
+app.register_blueprint(user_route)
 
 
 @app.route('/hello', methods=['GET'])
@@ -48,28 +54,28 @@ def index():
     return render_template("index.html")
 
 
-@app.route("/books", methods=["GET"])
-def books():
-    conn = DatabaseConnection()
-    conn.connect()
+# @app.route("/books", methods=["GET"])
+# def books():
+#     conn = DatabaseConnection()
+#     conn.connect()
 
-    book_repo = BookRepository(conn)
-    all_books = book_repo.all()
+#     book_repo = BookRepository(conn)
+#     all_books = book_repo.all()
 
-    return render_template("books/books.html", books=all_books)
+#     return render_template("books/books.html", books=all_books)
 
-@app.route("/books", methods=["POST"])
-@login_required_decorator
-def create_book():
-    new_book = request.form
+# @app.route("/books", methods=["POST"])
+# @login_required_decorator
+# def create_book():
+#     new_book = request.form
 
-    conn = DatabaseConnection()
-    conn.connect()
+#     conn = DatabaseConnection()
+#     conn.connect()
 
-    book_repo = BookRepository(conn)
-    book_repo.create(new_book)
+#     book_repo = BookRepository(conn)
+#     book_repo.create(new_book)
     
-    return redirect("/books")
+#     return redirect("/books")
 
 @app.route("/authors", methods=["GET"])
 def authors():
@@ -92,57 +98,57 @@ def authors():
         }
     ]
 
-@app.route("/sign-up", methods=["GET"])
-def sign_up():
-    return render_template("users/sign_up.html")
+# @app.route("/sign-up", methods=["GET"])
+# def sign_up():
+#     return render_template("users/sign_up.html")
 
-@app.route("/sign-up", methods=["POST"])
-def create_user():
-    form_data = request.form
+# @app.route("/sign-up", methods=["POST"])
+# def create_user():
+#     form_data = request.form
     
-    conn = DatabaseConnection()
-    conn.connect()
-    user_repo = UserRepository(conn, bcrypt)
+#     conn = DatabaseConnection()
+#     conn.connect()
+#     user_repo = UserRepository(conn, bcrypt)
 
-    user_repo.create_user(form_data)
+#     user_repo.create_user(form_data)
 
-    return redirect("/users")
+#     return redirect("/users")
 
-@app.route("/users", methods=["GET"])
-def users():
-    conn = DatabaseConnection()
-    conn.connect()
+# @app.route("/users", methods=["GET"])
+# def users():
+#     conn = DatabaseConnection()
+#     conn.connect()
 
-    user_repo = UserRepository(conn, bcrypt)
+#     user_repo = UserRepository(conn, bcrypt)
 
-    users = user_repo.all()
+#     users = user_repo.all()
 
-    return render_template("users/users.html", users=users)
+#     return render_template("users/users.html", users=users)
 
 
-@app.route("/login", methods=["GET"])
-def login_route():
-    return render_template("users/login.html")
+# @app.route("/login", methods=["GET"])
+# def login_route():
+#     return render_template("users/login.html")
 
-@app.route("/session", methods=["POST"])
-def login():
-    form_data = request.form
-    username = form_data.get("username")
-    password = form_data.get("password")
+# @app.route("/session", methods=["POST"])
+# def login():
+#     form_data = request.form
+#     username = form_data.get("username")
+#     password = form_data.get("password")
     
-    conn = DatabaseConnection()
-    conn.connect()
-    user_repo = UserRepository(conn, bcrypt)
+#     conn = DatabaseConnection()
+#     conn.connect()
+#     user_repo = UserRepository(conn, bcrypt)
 
-    user_exists = user_repo.does_user_exist(username)
-    # print(user_exists)
+#     user_exists = user_repo.does_user_exist(username)
+#     # print(user_exists)
 
-    if user_exists == True:
-        if user_repo.check_password(username, password) == True:
-            session["username"] = username
-            return redirect("/users")
+#     if user_exists == True:
+#         if user_repo.check_password(username, password) == True:
+#             session["username"] = username
+#             return redirect("/users")
 
-    return redirect("/login")
+#     return redirect("/login")
 
 
 # make the server run in response to `python app.py`
