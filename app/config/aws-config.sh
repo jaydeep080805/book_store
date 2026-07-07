@@ -7,7 +7,7 @@
 # # delete the container
 # docker container rm book_store_app_container
 
-source .env
+source ../.env
 
 docker rm -f book_store_app_container
 

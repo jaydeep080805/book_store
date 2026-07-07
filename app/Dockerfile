@@ -7,7 +7,7 @@ ENV DATABASE_HOST="postgresql://postgres:password@book_store_db"
 # copy the contents of the directory to the /app folder in docker
 COPY . /app
 WORKDIR /app
-RUN pip install -r requirements.txt
+RUN pip install -r app/requirements.txt
 CMD ["python", "app.py"]
 
 # this seeds the db, keep this command safe so i can use it again 
