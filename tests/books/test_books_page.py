@@ -1,5 +1,28 @@
 from playwright.sync_api import Page, expect
-import pytest
+
+from ...application_factory import create_app
+
+# from app import app
+
+# import sys
+# import os
+
+# this line is a bit of a hack which allows us to import app without changing anything else
+# i think this makes the path set to the parent dir so that app can be accessed
+# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
+app = create_app()
+
+def test_get_books_returns_a_200():
+    # here's where we make the test client
+    client = app.test_client()
+
+    # here's where we make the request
+    response = client.get("/books")
+
+    # here's where we assert that the response's status code is 200
+    assert response.status_code == 200
+
 
 def test_has_title(page: Page):
     Page.goto(page, url="http://127.0.0.1:5001/books")

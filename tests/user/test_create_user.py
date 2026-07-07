@@ -1,5 +1,5 @@
-from lib.users.user_repository import UserRepository
-from lib.users.user import User
+from ...lib.users.user_repository import UserRepository
+from ...lib.users.user import User
 
 # importing the db func makes sure it is seeded
 def test_create_user(db, bcrypt):

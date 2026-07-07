@@ -1,4 +1,5 @@
-from ..lib.movies.movie_repository import MovieRepository, Movie
+from ...lib.movies.movie_repository import MovieRepository
+from ...lib.movies.movie import Movie
 
 def test_get_all_movies(db):
     movie_repo = MovieRepository(db)

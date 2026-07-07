@@ -1,4 +1,4 @@
-from ..lib.movies.movie import Movie
+from ...lib.movies.movie import Movie
 
 def test_movie_has_correct_attributes():
     movie = Movie("Interstellar", 2009, 1)
