@@ -91,7 +91,7 @@ def test_create_books_inserts_book_into_database(page: Page):
     # print(f'>>> placeholder: {page.get_by_placeholder("Title")}')
     
     # insert the boko info
-    page.goto("http://localhost:5001/books")
+    page.goto("http://localhost:5001/create_book")
     page.get_by_placeholder("Title").fill("The Chroicles of Geronimo (the cat)")
     page.get_by_placeholder("Author").fill("Geronimo")
     page.get_by_role("button", name="Submit").click()

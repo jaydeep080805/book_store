@@ -17,18 +17,18 @@ def books():
 
     return render_template("books/books.html", books=all_books)
 
-@book_route.route("/books", methods=["POST"])
-@login_required_decorator
-def create_book():
-    new_book = request.form
+# @book_route.route("/books", methods=["POST"])
+# @login_required_decorator
+# def create_book():
+#     new_book = request.form
 
-    conn = DatabaseConnection()
-    conn.connect()
+#     conn = DatabaseConnection()
+#     conn.connect()
 
-    book_repo = BookRepository(conn)
-    book_repo.create(new_book)
+#     book_repo = BookRepository(conn)
+#     book_repo.create(new_book)
     
-    return redirect("/books")
+#     return redirect("/books")
 
 @book_route.route("/authors", methods=["GET"])
 def authors():
@@ -60,3 +60,20 @@ def get_book(id):
     book = book_repo.find(id)
     
     return render_template("books/book_page.html", book=book)
+
+@book_route.route("/create_book", methods=["GET"])
+def create_book_form():
+    return render_template("books/create_book_form.html")
+
+@book_route.route("/create_book", methods=["POST"])
+@login_required_decorator
+def create_book():
+    new_book = request.form
+
+    conn = DatabaseConnection()
+    conn.connect()
+
+    book_repo = BookRepository(conn)
+    book_repo.create(new_book)
+    
+    return redirect("/books")
