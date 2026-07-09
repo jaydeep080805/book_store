@@ -30,3 +30,16 @@ class BookRepository:
         print("book created successfully")
 
         return None
+    
+    def find(self, id):
+        # get only first item
+        # there should only be one item since it gets by id
+        # and all id's should be unique
+        query_result = self._connection.execute("SELECT * FROM books WHERE id = %s", [id])[0]
+
+        # print(f">>> QUERY RESULT: {query_result}")
+
+        # unpack vals with kwargs
+        book = Book(**query_result)
+        
+        return book

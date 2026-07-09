@@ -104,3 +104,11 @@ def test_create_books_inserts_book_into_database(page: Page):
     new_book = books.all_inner_texts()[-1]
 
     assert new_book == "The Chroicles of Geronimo (the cat) by Geronimo"
+
+
+def test_get_individual_book(page: Page):
+    page.goto("http://localhost:5001/books/1")
+
+    heading = page.locator("h1")
+
+    assert heading.all_inner_texts()[0] == "The Gruffalo - Julia Donaldson"

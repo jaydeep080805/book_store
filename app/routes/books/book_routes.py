@@ -50,3 +50,13 @@ def authors():
             "dob": "1979-11-11"
         }
     ]
+
+@book_route.route("/books/<id>", methods=["GET"])
+def get_book(id):
+    db = DatabaseConnection()
+    db.connect()
+
+    book_repo = BookRepository(db)
+    book = book_repo.find(id)
+    
+    return render_template("books/book_page.html", book=book)
