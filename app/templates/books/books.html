@@ -5,7 +5,7 @@
 
   <ul>
     {% for book in books %}
-    <li>{{book.title}} by {{book.author}}</li>
+    <li><a href="{{ url_for('book_route.get_book', id=1) }}">{{book.title}}</a> by {{book.author}}</li>
     {% endfor %}
   </ul>
 {% endblock %}
