@@ -1,21 +1,16 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Books</title>
-  </head>
+{% extends "base.html" %}
 
-  <body>
-    <h1>Books</h1>
+{% block content %}
+  <h1>Books</h1>
 
-    <ul>
-      {% for book in books %}
-      <li>{{book.title}} by {{book.author}}</li>
-      {% endfor %}
-    </ul>
-  </body>
-</html>
+  <ul>
+    {% for book in books %}
+    <li>{{book.title}} by {{book.author}}</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
+
+
 
 <!-- <li>The Gruffalo by Julia Donaldson</li>
 <li>Ada Twist, Scientist by Andrea Beaty</li>
